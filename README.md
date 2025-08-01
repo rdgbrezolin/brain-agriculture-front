@@ -1,103 +1,298 @@
-# **Brain Agriculture - Teste Técnico v2**
+# Brain Agriculture - Sistema de Gerenciamento de Produtores Rurais
 
-Olá! Bem-vindo(a) ao nosso teste técnico. Estamos muito animados para conhecer mais sobre você, suas habilidades técnicas e sua forma de resolver problemas. Este teste foi pensado para ser um reflexo do que valorizamos em nosso time, e esperamos que você se sinta confortável e confiante durante o processo.
+## 📋 Descrição
 
-## **O que queremos avaliar?**
+Sistema front-end desenvolvido para o teste técnico da Brain Agriculture, focado no gerenciamento de produtores rurais e suas propriedades. A aplicação permite cadastrar, editar e visualizar produtores rurais com suas respectivas fazendas e culturas plantadas.
 
-Nosso objetivo com este teste é entender melhor como você:
+## 🚀 Tecnologias Utilizadas
 
-- Resolve problemas relacionados à lógica de programação e orientação a objetos.
-- Interpreta requisitos de negócio e os transforma em soluções técnicas.
-- Aplica boas práticas de desenvolvimento, com foco em código limpo, testável, de fácil manutenção e observável.
-- Garante que o sistema seja escalável e confiável, principalmente ao lidar com grande volume de dados.
-- Escreve documentações claras para facilitar a integração e manutenção por outros desenvolvedores ou clientes.
+- **React 19** - Biblioteca para construção de interfaces
+- **TypeScript** - Tipagem estática para JavaScript
+- **Vite** - Build tool e dev server
+- **Redux Toolkit** - Gerenciamento de estado
+- **Styled Components** - CSS-in-JS para estilização
+- **React Hook Form** - Gerenciamento de formulários
+- **Yup** - Validação de esquemas
+- **Recharts** - Biblioteca de gráficos
+- **Jest** - Framework de testes
+- **React Testing Library** - Utilitários para testes
 
-**Dica:** Imagine que você está criando uma aplicação que será utilizada por clientes, parceiros ou até mesmo por outros desenvolvedores. Queremos ver sua atenção aos detalhes!
+## 🏗️ Arquitetura
 
-## **O que você precisa desenvolver?**
+O projeto segue o padrão **Atomic Design** para organização dos componentes:
 
-A proposta é criar uma aplicação para gerenciar o cadastro de produtores rurais, com os seguintes dados:
+```
+src/
+├── components/
+│   ├── atoms/          # Componentes básicos (Button, Input, Select, Card)
+│   ├── molecules/      # Componentes compostos (PieChart)
+│   ├── organisms/      # Componentes complexos (ProducerForm, Dashboard, ProducersList)
+│   ├── templates/      # Layouts (Layout)
+│   └── pages/          # Páginas da aplicação
+├── store/              # Redux store e slices
+├── types/              # Definições de tipos TypeScript
+├── utils/              # Utilitários (validação CPF/CNPJ)
+├── hooks/              # Hooks personalizados
+├── mocks/              # Dados mockados
+└── services/           # Serviços (futuras integrações com API)
+```
 
-- CPF ou CNPJ
-- Nome do produtor
-- Nome da fazenda (propriedade)
-- Cidade
-- Estado
-- Área total da fazenda (em hectares)
-- Área agricultável (em hectares)
-- Área de vegetação (em hectares)
-- Safras (ex: Safra 2021, Safra 2022)
-- Culturas plantadas (ex.: Soja na Safra 2021, Milho na Safra 2021, Café na Safra 2022)
+## ✨ Funcionalidades
 
-### **Requisitos de negócio**
+### 📊 Dashboard
 
-1. Permitir o cadastro, edição e exclusão de produtores rurais.
-2. Validar o CPF ou CNPJ fornecido pelo usuário.
-3. Garantir que a soma das áreas agricultável e de vegetação não ultrapasse a área total da fazenda.
-4. Permitir o registro de várias culturas plantadas por fazenda do produtor.
-5. Um produtor pode estar associado a 0, 1 ou mais propriedades rurais.
-6. Uma propriedade rural pode ter 0, 1 ou mais culturas plantadas por safra.
-7. Exibir um dashboard com:
-   - Total de fazendas cadastradas (quantidade).
-   - Total de hectares registrados (área total).
-   - Gráficos de pizza:
-     - Por estado.
-     - Por cultura plantada.
-     - Por uso do solo (área agricultável e vegetação).
+- **Estatísticas gerais**: Total de fazendas, hectares, produtores e culturas
+- **Gráficos de pizza**:
+  - Distribuição por estado
+  - Distribuição por cultura plantada
+  - Distribuição por uso do solo (área agricultável vs vegetação)
+
+### 👥 Gerenciamento de Produtores
+
+- **Cadastro de produtores** com validação de CPF/CNPJ
+- **Edição de dados** existentes
+- **Exclusão** com confirmação
+- **Listagem detalhada** com informações das fazendas
+
+### 🏡 Dados das Fazendas
+
+- **Informações básicas**: Nome, cidade, estado
+- **Áreas**: Total, agricultável e vegetação
+- **Validação**: Soma das áreas não pode ultrapassar área total
+- **Culturas**: Múltiplas culturas por safra
+
+### ✅ Validações Implementadas
+
+- **CPF/CNPJ**: Validação completa com dígitos verificadores
+- **Áreas**: Validação de soma das áreas
+- **Campos obrigatórios**: Todos os campos necessários
+- **Formatação automática**: CPF/CNPJ formatados automaticamente
+
+## 🛠️ Instalação e Execução
+
+### Pré-requisitos
+
+- Node.js (versão 18 ou superior)
+- npm ou yarn
+
+### Instalação
+
+```bash
+# Clone o repositório
+git clone <url-do-repositorio>
+cd brain-agriculture-front
+
+# Instale as dependências
+npm install
+```
+
+### Execução
+
+```bash
+# Modo desenvolvimento
+npm run dev
+
+# Build para produção
+npm run build
+
+# Preview do build
+npm run preview
+```
+
+### Testes
+
+```bash
+# Executar todos os testes
+npm test
+
+# Executar testes em modo watch
+npm run test:watch
+
+# Executar testes com cobertura
+npm run test:coverage
+```
+
+## 📁 Estrutura de Dados
+
+### Produtor
+
+```typescript
+interface Producer {
+  id: string;
+  cpfCnpj: string;
+  name: string;
+  farms: Farm[];
+}
+```
+
+### Fazenda
+
+```typescript
+interface Farm {
+  id: string;
+  name: string;
+  city: string;
+  state: string;
+  totalArea: number; // hectares
+  agriculturalArea: number; // hectares
+  vegetationArea: number; // hectares
+  crops: Crop[];
+}
+```
+
+### Cultura
+
+```typescript
+interface Crop {
+  id: string;
+  name: string;
+  harvest: string; // ex: "Safra 2021"
+  area: number; // hectares
+}
+```
+
+## 🎨 Design System
+
+### Cores
+
+- **Primary**: #007bff (Azul)
+- **Secondary**: #6c757d (Cinza)
+- **Success**: #28a745 (Verde)
+- **Danger**: #dc3545 (Vermelho)
+- **Warning**: #ffc107 (Amarelo)
+
+### Componentes
+
+- **Button**: Variantes primary, secondary, danger
+- **Input**: Com validação visual
+- **Select**: Dropdown customizado
+- **Card**: Container com sombra
+- **PieChart**: Gráficos de pizza responsivos
+
+## 🧪 Testes
+
+O projeto inclui testes unitários para:
+
+- Componentes React
+- Funções de validação
+- Utilitários
+
+Cobertura mínima de 80% para:
+
+- Branches
+- Functions
+- Lines
+- Statements
+
+## 📱 Responsividade
+
+A aplicação é totalmente responsiva e funciona em:
+
+- **Desktop**: Layout completo com gráficos
+- **Tablet**: Layout adaptado
+- **Mobile**: Layout otimizado para telas pequenas
+
+## 🔧 Configurações
+
+### Vite
+
+- TypeScript support
+- Hot Module Replacement
+- Build otimizado
+
+### Jest
+
+- Ambiente jsdom
+- Setup automático para React Testing Library
+- Cobertura de código
+
+### ESLint
+
+- Configuração para React + TypeScript
+- Regras de qualidade de código
+
+## 🚀 Deploy
+
+Para fazer deploy da aplicação:
+
+1. Execute o build:
+
+```bash
+npm run build
+```
+
+2. Os arquivos estarão na pasta `dist/`
+
+3. Faça upload para seu servidor web ou plataforma de deploy
+
+## 💾 Persistência de Dados
+
+### Armazenamento Local
+
+- **localStorage**: Dados persistidos no navegador
+- **Sobrevivência**: Dados mantidos após atualizações da página
+- **Dados Iniciais**: JSON com dados mockados para primeiro acesso
+- **Gerenciamento**: Interface para reset, exportação e limpeza
+
+### Funcionalidades de Dados
+
+- ✅ **Persistência Automática**: Dados salvos automaticamente
+- ✅ **Reset para Inicial**: Voltar aos dados originais
+- ✅ **Exportação**: Download dos dados em JSON
+- ✅ **Limpeza Total**: Remover todos os dados salvos
+- ✅ **Status Visual**: Indicação se há dados salvos
+
+### Estrutura de Arquivos
+
+```
+src/
+├── mocks/
+│   ├── initialData.json    # Dados iniciais em JSON
+│   └── data.ts            # Exportação dos dados
+├── services/
+│   └── storageService.ts  # Serviço de persistência
+└── components/
+    └── molecules/
+        └── DataManager.tsx # Interface de gerenciamento
+```
+
+## 📈 Melhorias Futuras
+
+- [ ] Integração com API backend
+- [ ] Autenticação de usuários
+- [ ] Filtros avançados na listagem
+- [ ] Exportação de dados
+- [ ] Notificações em tempo real
+- [ ] PWA (Progressive Web App)
+- [ ] Testes E2E com Cypress
+
+## 👨‍💻 Desenvolvimento
+
+### Padrões de Código
+
+- **Clean Code**: Código limpo e legível
+- **SOLID**: Princípios de design
+- **DRY**: Don't Repeat Yourself
+- **KISS**: Keep It Simple, Stupid
+
+### Commits
+
+Siga o padrão Conventional Commits:
+
+```
+feat: adiciona nova funcionalidade
+fix: corrige bug
+docs: atualiza documentação
+style: formatação de código
+refactor: refatoração
+test: adiciona testes
+chore: tarefas de manutenção
+```
+
+## 📄 Licença
+
+Este projeto foi desenvolvido para o teste técnico da Brain Agriculture.
 
 ---
 
-## **Tecnologias sugeridas**
-
-Sabemos que você pode ter seu próprio estilo, mas aqui estão algumas tecnologias e boas práticas que valorizamos:
-
-- **Conceitos**: SOLID, KISS, Clean Code, API Contracts, Testes, Arquitetura em camadas.
-- **Documentações**: Para facilitar o entendimento do funcionamento do sistema, é importante incluir um README claro, uma especificação OpenAPI e, caso necessário, diagramas que ajudem a visualizar a arquitetura ou os processos.
-- **Bônus**: Se conseguir disponibilizar a aplicação na nuvem e acessível via internet, será um diferencial!
-
-### **Se você for desenvolvedor FRONTEND:**
-
-- Utilize **TypeScript**.
-- Utilize **ReactJS**.
-- Use **Redux** para gerenciar o estado da aplicação.
-  - Se preferir, você pode usar **Context API** como alternativa ou complemento ao Redux (opcional).
-- Estruture dados "mockados" para simular cenários.
-- Desenvolva testes unitários com **Jest** e **React Testing Library**.
-- Estruture os componentes utilizando atomic design patterns.
-- Utilize css in js com bibliotecas como **Styled Components** ou **Emotion**.
-- Estruture o projeto como um microfrontend (opcional);
-
-### **Se você for desenvolvedor BACKEND:**
-
-- Desenvolva uma **API REST**.
-- Utilize **Docker** para distribuir a aplicação.
-- Utilize **Postgres** como banco de dados.
-- Crie os endpoints necessários para atender os requisitos de negócio.
-- Desenvolva testes unitários e integrados.
-- Estruture dados "mockados" para testes.
-- Inclua logs para garantir a observabilidade do sistema, facilitando o monitoramento e a identificação de possíveis problemas.
-- Utilize um framework de ORM.
-
-#### **Se você for desenvolvedor BACKEND Node:**
-
-- Utilize **TypeScript**.
-- Utilize **NestJS** ou **AdonisJS**
-
-#### **Se você for desenvolvedor BACKEND Python:**
-
-- Utilize **Python 3**.
-- Utilize **Django**, **Flask** ou **FastAPI**.
-
-### **Se você for desenvolvedor FULLSTACK:**
-
-- Conclua tanto o FRONTEND quanto o BACKEND, garantindo a integração entre eles.
-
----
-
-## **Como enviar seu projeto?**
-
-Ao concluir o desenvolvimento, suba o código-fonte para um repositório no **GitHub** (ou outro provedor de sua escolha). Certifique-se de que o repositório seja público ou que possamos acessá-lo, e nos envie o link.
-
----
-
-**Nota final:** Queremos que você aproveite esse desafio para mostrar suas habilidades, mas também para aprender e se divertir. Se tiver dúvidas ou precisar de alguma orientação durante o processo, estamos aqui para ajudar! Boa sorte! 🌟
+**Desenvolvido com ❤️ para Brain Agriculture**

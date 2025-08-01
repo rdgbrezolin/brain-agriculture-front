@@ -1,0 +1,106 @@
+{
+  "producers": [
+    {
+      "id": "1",
+      "cpfCnpj": "111.444.777-35",
+      "name": "João Silva",
+      "farms": [
+        {
+          "id": "farm1",
+          "name": "Fazenda São João",
+          "city": "Campinas",
+          "state": "SP",
+          "totalArea": 1500,
+          "agriculturalArea": 1000,
+          "vegetationArea": 500,
+          "crops": [
+            {
+              "id": "crop1",
+              "name": "Soja",
+              "harvest": "Safra 2023",
+              "area": 800
+            },
+            {
+              "id": "crop2",
+              "name": "Milho",
+              "harvest": "Safra 2023",
+              "area": 200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "cpfCnpj": "222.555.888-46",
+      "name": "Maria Santos",
+      "farms": [
+        {
+          "id": "farm2",
+          "name": "Sítio Boa Vista",
+          "city": "Ribeirão Preto",
+          "state": "SP",
+          "totalArea": 800,
+          "agriculturalArea": 600,
+          "vegetationArea": 200,
+          "crops": [
+            {
+              "id": "crop3",
+              "name": "Café",
+              "harvest": "Safra 2023",
+              "area": 400
+            },
+            {
+              "id": "crop4",
+              "name": "Laranja",
+              "harvest": "Safra 2023",
+              "area": 200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "cpfCnpj": "333.666.999-57",
+      "name": "Pedro Oliveira",
+      "farms": [
+        {
+          "id": "farm3",
+          "name": "Fazenda Santa Clara",
+          "city": "Uberlândia",
+          "state": "MG",
+          "totalArea": 2000,
+          "agriculturalArea": 1500,
+          "vegetationArea": 500,
+          "crops": [
+            {
+              "id": "crop5",
+              "name": "Soja",
+              "harvest": "Safra 2023",
+              "area": 1000
+            },
+            {
+              "id": "crop6",
+              "name": "Algodão",
+              "harvest": "Safra 2023",
+              "area": 500
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "states": [
+    "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA",
+    "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
+    "RS", "RO", "RR", "SC", "SP", "SE", "TO"
+  ],
+  "crops": [
+    "Soja", "Milho", "Café", "Algodão", "Arroz", "Feijão", "Trigo",
+    "Cana-de-açúcar", "Laranja", "Uva", "Maçã", "Banana", "Manga"
+  ],
+  "harvests": [
+    "Safra 2021", "Safra 2022", "Safra 2023", "Safra 2024"
+  ]
+} 
