@@ -10,17 +10,17 @@ export interface Farm {
   name: string;
   city: string;
   state: string;
-  totalArea: number; // hectares
-  agriculturalArea: number; // hectares
-  vegetationArea: number; // hectares
+  totalArea: number;
+  agriculturalArea: number;
+  vegetationArea: number;
   crops: Crop[];
 }
 
 export interface Crop {
   id: string;
   name: string;
-  harvest: string; // ex: "Safra 2021"
-  area: number; // hectares
+  harvest: string;
+  area: number;
 }
 
 export interface DashboardStats {
@@ -40,16 +40,18 @@ export interface ChartData {
 export interface FormData {
   cpfCnpj: string;
   name: string;
-  farmName: string;
-  city: string;
-  state: string;
-  totalArea: number;
-  agriculturalArea: number;
-  vegetationArea: number;
-  crops: Omit<Crop, "id">[];
+  farms: Farm[];
 }
 
 export interface ValidationError {
   field: string;
   message: string;
+}
+
+export interface State {
+  producers: Producer[];
+}
+
+export interface RootState {
+  producers: State;
 }

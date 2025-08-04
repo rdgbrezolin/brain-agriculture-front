@@ -10,7 +10,10 @@
     "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "microfrontends:http": "./scripts/start-simple-server.sh",
+    "cleanup": "./scripts/cleanup.sh",
+    "build:microfrontends": "npm run build && cd microfrontends/header && npm run build && cd ../dashboard && npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
@@ -33,6 +36,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",
+    "@originjs/vite-plugin-federation": "^1.4.1",
     "@types/jest": "^30.0.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",

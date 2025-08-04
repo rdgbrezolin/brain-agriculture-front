@@ -1,109 +1,101 @@
-# Brain Agriculture - Sistema de Gerenciamento de Produtores Rurais
+# 🧠 Brain Agriculture Frontend
 
-## 📋 Descrição
+Uma aplicação React moderna com arquitetura de microfrontends usando Module Federation.
 
-Sistema front-end desenvolvido para o teste técnico da Brain Agriculture, focado no gerenciamento de produtores rurais e suas propriedades. A aplicação permite cadastrar, editar e visualizar produtores rurais com suas respectivas fazendas e culturas plantadas.
+## 🚀 Características
 
-## 🚀 Tecnologias Utilizadas
+- **⚛️ React 19** com TypeScript
+- **🏗️ Microfrontends** com Module Federation
+- **🎨 Styled Components** para estilização
+- **📊 Recharts** para gráficos e visualizações
+- **🔄 Redux Toolkit** para gerenciamento de estado
+- **🛣️ React Router** para navegação
+- **🧪 Jest** para testes
+- **⚡ Vite** para build e desenvolvimento
 
-- **React 19** - Biblioteca para construção de interfaces
-- **TypeScript** - Tipagem estática para JavaScript
-- **Vite** - Build tool e dev server
-- **Redux Toolkit** - Gerenciamento de estado
-- **Styled Components** - CSS-in-JS para estilização
-- **React Hook Form** - Gerenciamento de formulários
-- **Yup** - Validação de esquemas
-- **Recharts** - Biblioteca de gráficos
-- **Jest** - Framework de testes
-- **React Testing Library** - Utilitários para testes
+## 📁 Estrutura do Projeto
+
+```
+brain-agriculture-front/
+├── src/                    # Código da aplicação principal
+│   ├── components/         # Componentes reutilizáveis
+│   ├── microfrontends/     # Configurações dos microfrontends
+│   ├── store/             # Redux store
+│   ├── routes/            # Configurações de rotas
+│   └── utils/             # Utilitários
+├── microfrontends/         # Microfrontends
+│   ├── header/            # Header microfrontend
+│   └── dashboard/         # Dashboard microfrontend
+├── scripts/               # Scripts de automação
+├── logs/                  # Logs dos serviços
+└── docs/                  # Documentação
+```
+
+## 🛠️ Pré-requisitos
+
+- **Node.js**: v18 ou superior
+- **npm**: v9 ou superior
+- **Python**: v3.9 ou superior (para servidor CORS)
+
+## 🚀 Instalação e Execução
+
+### 1. Instalar Dependências
+
+```bash
+# Instalar dependências principais
+npm install
+
+# Instalar dependências dos microfrontends
+cd microfrontends/header && npm install --force && cd ../..
+cd microfrontends/dashboard && npm install --force && cd ../..
+```
+
+### 2. Executar o Projeto
+
+```bash
+# Método recomendado (com servidor CORS)
+npm run microfrontends:http
+```
+
+### 3. Acessar a Aplicação
+
+- **🏠 Aplicação Principal**: `http://localhost:5173`
+- **📊 Header Microfrontend**: `http://localhost:3001`
+- **📈 Dashboard Microfrontend**: `http://localhost:3002`
+
+## 📋 Scripts Disponíveis
+
+| Script                         | Descrição                                         |
+| ------------------------------ | ------------------------------------------------- |
+| `npm run dev`                  | Executa apenas a aplicação principal              |
+| `npm run microfrontends:http`  | **Recomendado** - Executa todos os microfrontends |
+| `npm run build`                | Build da aplicação principal                      |
+| `npm run build:microfrontends` | Build de todos os microfrontends                  |
+| `npm run cleanup`              | Limpa processos e portas                          |
+| `npm run test`                 | Executa testes                                    |
+| `npm run lint`                 | Executa linting                                   |
 
 ## 🏗️ Arquitetura
 
-O projeto segue o padrão **Atomic Design** para organização dos componentes:
+### Microfrontends
 
-```
-src/
-├── components/
-│   ├── atoms/          # Componentes básicos (Button, Input, Select, Card)
-│   ├── molecules/      # Componentes compostos (PieChart)
-│   ├── organisms/      # Componentes complexos (ProducerForm, Dashboard, ProducersList)
-│   ├── templates/      # Layouts (Layout)
-│   └── pages/          # Páginas da aplicação
-├── store/              # Redux store e slices
-├── types/              # Definições de tipos TypeScript
-├── utils/              # Utilitários (validação CPF/CNPJ)
-├── hooks/              # Hooks personalizados
-├── mocks/              # Dados mockados
-└── services/           # Serviços (futuras integrações com API)
-```
+O projeto utiliza uma arquitetura de microfrontends com:
 
-## ✨ Funcionalidades
+- **Header Microfrontend**: Navegação e layout superior
+- **Dashboard Microfrontend**: Gráficos e visualizações
+- **Aplicação Principal**: Container que orquestra os microfrontends
 
-### 📊 Dashboard
+### Module Federation
 
-- **Estatísticas gerais**: Total de fazendas, hectares, produtores e culturas
-- **Gráficos de pizza**:
-  - Distribuição por estado
-  - Distribuição por cultura plantada
-  - Distribuição por uso do solo (área agricultável vs vegetação)
+- **Compartilhamento de Dependências**: React, React-DOM, Styled Components
+- **Isolamento**: Cada microfrontend pode ser desenvolvido independentemente
+- **Integração**: Carregamento dinâmico dos microfrontends
 
-### 👥 Gerenciamento de Produtores
-
-- **Cadastro de produtores** com validação de CPF/CNPJ
-- **Edição de dados** existentes
-- **Exclusão** com confirmação
-- **Listagem detalhada** com informações das fazendas
-
-### 🏡 Dados das Fazendas
-
-- **Informações básicas**: Nome, cidade, estado
-- **Áreas**: Total, agricultável e vegetação
-- **Validação**: Soma das áreas não pode ultrapassar área total
-- **Culturas**: Múltiplas culturas por safra
-
-### ✅ Validações Implementadas
-
-- **CPF/CNPJ**: Validação completa com dígitos verificadores
-- **Áreas**: Validação de soma das áreas
-- **Campos obrigatórios**: Todos os campos necessários
-- **Formatação automática**: CPF/CNPJ formatados automaticamente
-
-## 🛠️ Instalação e Execução
-
-### Pré-requisitos
-
-- Node.js (versão 18 ou superior)
-- npm ou yarn
-
-### Instalação
-
-```bash
-# Clone o repositório
-git clone <url-do-repositorio>
-cd brain-agriculture-front
-
-# Instale as dependências
-npm install
-```
-
-### Execução
-
-```bash
-# Modo desenvolvimento
-npm run dev
-
-# Build para produção
-npm run build
-
-# Preview do build
-npm run preview
-```
-
-### Testes
+## 🧪 Testes
 
 ```bash
 # Executar todos os testes
-npm test
+npm run test
 
 # Executar testes em modo watch
 npm run test:watch
@@ -112,186 +104,64 @@ npm run test:watch
 npm run test:coverage
 ```
 
-## 📁 Estrutura de Dados
+## 🔧 Desenvolvimento
 
-### Produtor
-
-```typescript
-interface Producer {
-  id: string;
-  cpfCnpj: string;
-  name: string;
-  farms: Farm[];
-}
-```
-
-### Fazenda
-
-```typescript
-interface Farm {
-  id: string;
-  name: string;
-  city: string;
-  state: string;
-  totalArea: number; // hectares
-  agriculturalArea: number; // hectares
-  vegetationArea: number; // hectares
-  crops: Crop[];
-}
-```
-
-### Cultura
-
-```typescript
-interface Crop {
-  id: string;
-  name: string;
-  harvest: string; // ex: "Safra 2021"
-  area: number; // hectares
-}
-```
-
-## 🎨 Design System
-
-### Cores
-
-- **Primary**: #007bff (Azul)
-- **Secondary**: #6c757d (Cinza)
-- **Success**: #28a745 (Verde)
-- **Danger**: #dc3545 (Vermelho)
-- **Warning**: #ffc107 (Amarelo)
-
-### Componentes
-
-- **Button**: Variantes primary, secondary, danger
-- **Input**: Com validação visual
-- **Select**: Dropdown customizado
-- **Card**: Container com sombra
-- **PieChart**: Gráficos de pizza responsivos
-
-## 🧪 Testes
-
-O projeto inclui testes unitários para:
-
-- Componentes React
-- Funções de validação
-- Utilitários
-
-Cobertura mínima de 80% para:
-
-- Branches
-- Functions
-- Lines
-- Statements
-
-## 📱 Responsividade
-
-A aplicação é totalmente responsiva e funciona em:
-
-- **Desktop**: Layout completo com gráficos
-- **Tablet**: Layout adaptado
-- **Mobile**: Layout otimizado para telas pequenas
-
-## 🔧 Configurações
-
-### Vite
-
-- TypeScript support
-- Hot Module Replacement
-- Build otimizado
-
-### Jest
-
-- Ambiente jsdom
-- Setup automático para React Testing Library
-- Cobertura de código
-
-### ESLint
-
-- Configuração para React + TypeScript
-- Regras de qualidade de código
-
-## 🚀 Deploy
-
-Para fazer deploy da aplicação:
-
-1. Execute o build:
-
-```bash
-npm run build
-```
-
-2. Os arquivos estarão na pasta `dist/`
-
-3. Faça upload para seu servidor web ou plataforma de deploy
-
-## 💾 Persistência de Dados
-
-### Armazenamento Local
-
-- **localStorage**: Dados persistidos no navegador
-- **Sobrevivência**: Dados mantidos após atualizações da página
-- **Dados Iniciais**: JSON com dados mockados para primeiro acesso
-- **Gerenciamento**: Interface para reset, exportação e limpeza
-
-### Funcionalidades de Dados
-
-- ✅ **Persistência Automática**: Dados salvos automaticamente
-- ✅ **Reset para Inicial**: Voltar aos dados originais
-- ✅ **Exportação**: Download dos dados em JSON
-- ✅ **Limpeza Total**: Remover todos os dados salvos
-- ✅ **Status Visual**: Indicação se há dados salvos
-
-### Estrutura de Arquivos
+### Estrutura de Componentes
 
 ```
-src/
-├── mocks/
-│   ├── initialData.json    # Dados iniciais em JSON
-│   └── data.ts            # Exportação dos dados
-├── services/
-│   └── storageService.ts  # Serviço de persistência
-└── components/
-    └── molecules/
-        └── DataManager.tsx # Interface de gerenciamento
+src/components/
+├── atoms/          # Componentes atômicos (Button, Input, etc.)
+├── molecules/      # Componentes moleculares (DataManager, etc.)
+├── organisms/      # Componentes orgânicos (Dashboard, etc.)
+├── pages/          # Páginas da aplicação
+└── templates/      # Templates de layout
 ```
 
-## 📈 Melhorias Futuras
+### Design System
 
-- [ ] Integração com API backend
-- [ ] Autenticação de usuários
-- [ ] Filtros avançados na listagem
-- [ ] Exportação de dados
-- [ ] Notificações em tempo real
-- [ ] PWA (Progressive Web App)
-- [ ] Testes E2E com Cypress
+O projeto utiliza um design system consistente com:
 
-## 👨‍💻 Desenvolvimento
+- **Tokens**: Cores, tipografia, espaçamentos
+- **Componentes**: Biblioteca de componentes reutilizáveis
+- **Temas**: Sistema de temas para personalização
 
-### Padrões de Código
+## 🐛 Solução de Problemas
 
-- **Clean Code**: Código limpo e legível
-- **SOLID**: Princípios de design
-- **DRY**: Don't Repeat Yourself
-- **KISS**: Keep It Simple, Stupid
+### Problemas Comuns
 
-### Commits
+1. **Porta já em uso**: Execute `npm run cleanup`
+2. **Erro de CORS**: Use `npm run microfrontends:http`
+3. **Erro de build**: Verifique as versões do React nos microfrontends
 
-Siga o padrão Conventional Commits:
+### Logs
 
-```
-feat: adiciona nova funcionalidade
-fix: corrige bug
-docs: atualiza documentação
-style: formatação de código
-refactor: refatoração
-test: adiciona testes
-chore: tarefas de manutenção
-```
+Os logs estão disponíveis em `logs/`:
+
+- `header.log` - Log do Header microfrontend
+- `dashboard.log` - Log do Dashboard microfrontend
+- `header-build.log` - Log do build do Header
+- `dashboard-build.log` - Log do build do Dashboard
+
+## 📚 Documentação
+
+- **SETUP.md**: Guia completo de configuração e execução
+- **README.md**: Este arquivo
+
+## 🤝 Contribuição
+
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
 
 ## 📄 Licença
 
-Este projeto foi desenvolvido para o teste técnico da Brain Agriculture.
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+
+## 👥 Autores
+
+- **Brain Agriculture Team**
 
 ---
 

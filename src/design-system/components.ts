@@ -1,246 +1,311 @@
 import styled from "styled-components";
-import { theme } from "./theme";
+import { colors, typography, spacing, borderRadius, shadows } from "./tokens";
 
-// ===== COMPONENTES BASE =====
-
-export const Container = styled.div<{
-  maxWidth?: string;
-  padding?: string;
-  margin?: string;
-}>`
+export const Container = styled.div`
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 ${spacing[6]};
   width: 100%;
-  max-width: ${(props) => props.maxWidth || "1400px"};
-  margin: ${(props) => props.margin || "0 auto"};
-  padding: ${(props) => props.padding || "0"};
   box-sizing: border-box;
-`;
 
-export const Grid = styled.div<{
-  columns?: number;
-  gap?: string;
-  alignItems?: string;
-  justifyContent?: string;
-}>`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${(props) => props.gap || theme.spacing[4]};
-  align-items: ${(props) => props.alignItems || "stretch"};
-  justify-content: ${(props) => props.justifyContent || "start"};
-
-  @media (max-width: ${theme.breakpoints.md}) {
-    flex-direction: column;
+  @media (max-width: 768px) {
+    padding: 0 ${spacing[4]};
   }
 `;
 
 export const Flex = styled.div<{
   direction?: "row" | "column";
-  gap?: string;
-  alignItems?: string;
-  justifyContent?: string;
-  wrap?: boolean;
+  justify?: "start" | "center" | "end" | "space-between" | "space-around";
+  align?: "start" | "center" | "end" | "stretch";
+  gap?: keyof typeof spacing;
+  wrap?: "wrap" | "nowrap";
 }>`
   display: flex;
   flex-direction: ${(props) => props.direction || "row"};
-  gap: ${(props) => props.gap || "0"};
-  align-items: ${(props) => props.alignItems || "stretch"};
-  justify-content: ${(props) => props.justifyContent || "start"};
-  flex-wrap: ${(props) => (props.wrap ? "wrap" : "nowrap")};
+  justify-content: ${(props) => props.justify || "start"};
+  align-items: ${(props) => props.align || "stretch"};
+  gap: ${(props) => spacing[props.gap || 0]};
+  flex-wrap: ${(props) => props.wrap || "nowrap"};
 `;
 
-export const Section = styled.section<{
-  padding?: string;
-  margin?: string;
-  background?: string;
+export const Grid = styled.div<{
+  columns?: number;
+  gap?: keyof typeof spacing;
 }>`
-  padding: ${(props) => props.padding || theme.spacing[6]};
-  margin: ${(props) => props.margin || "0"};
-  background: ${(props) => props.background || "transparent"};
+  display: grid;
+  grid-template-columns: repeat(${(props) => props.columns || 1}, 1fr);
+  gap: ${(props) => spacing[props.gap || 0]};
 `;
 
-// ===== COMPONENTES DE TEXTO =====
-
-export const Heading = styled.h1<{
-  level?: 1 | 2 | 3 | 4 | 5 | 6;
-  color?: string;
-  align?: string;
-  weight?: keyof typeof theme.typography.fontWeight;
-}>`
-  margin: 0;
-  color: ${(props) => props.color || theme.colors.text.primary};
-  text-align: ${(props) => props.align || "left"};
-  font-weight: ${(props) =>
-    theme.typography.fontWeight[props.weight || "semibold"]};
-  line-height: ${theme.typography.lineHeight.tight};
-
-  ${(props) => {
-    switch (props.level) {
-      case 1:
-        return `font-size: ${theme.typography.fontSize["4xl"]};`;
-      case 2:
-        return `font-size: ${theme.typography.fontSize["3xl"]};`;
-      case 3:
-        return `font-size: ${theme.typography.fontSize["2xl"]};`;
-      case 4:
-        return `font-size: ${theme.typography.fontSize.xl};`;
-      case 5:
-        return `font-size: ${theme.typography.fontSize.lg};`;
-      case 6:
-        return `font-size: ${theme.typography.fontSize.base};`;
-      default:
-        return `font-size: ${theme.typography.fontSize["2xl"]};`;
-    }
-  }}
-
-  @media (max-width: ${theme.breakpoints.md}) {
-    font-size: ${(props) => {
-      switch (props.level) {
-        case 1:
-          return theme.typography.fontSize["3xl"];
-        case 2:
-          return theme.typography.fontSize["2xl"];
-        case 3:
-          return theme.typography.fontSize.xl;
-        case 4:
-          return theme.typography.fontSize.lg;
-        case 5:
-          return theme.typography.fontSize.base;
-        case 6:
-          return theme.typography.fontSize.sm;
-        default:
-          return theme.typography.fontSize.xl;
-      }
-    }};
-  }
+export const Card = styled.div`
+  background: ${colors.background.primary};
+  border-radius: ${borderRadius.lg};
+  box-shadow: ${shadows.base};
+  padding: ${spacing[6]};
+  border: 1px solid ${colors.border.light};
 `;
 
-export const Text = styled.p<{
-  size?: keyof typeof theme.typography.fontSize;
-  color?: string;
-  weight?: keyof typeof theme.typography.fontWeight;
-  align?: string;
-  lineHeight?: keyof typeof theme.typography.lineHeight;
-}>`
-  margin: 0;
-  font-size: ${(props) => theme.typography.fontSize[props.size || "base"]};
-  color: ${(props) => props.color || theme.colors.text.primary};
-  font-weight: ${(props) =>
-    theme.typography.fontWeight[props.weight || "normal"]};
-  text-align: ${(props) => props.align || "left"};
-  line-height: ${(props) =>
-    theme.typography.lineHeight[props.lineHeight || "normal"]};
-`;
-
-// ===== COMPONENTES DE LAYOUT =====
-
-export const Card = styled.div<{
-  padding?: string;
-  margin?: string;
-  shadow?: keyof typeof theme.shadows;
-  border?: string;
-  borderRadius?: keyof typeof theme.borderRadius;
-  background?: string;
-}>`
-  background: ${(props) => props.background || theme.colors.background.primary};
-  border: ${(props) =>
-    props.border || `1px solid ${theme.colors.border.light}`};
-  border-radius: ${(props) => theme.borderRadius[props.borderRadius || "lg"]};
-  padding: ${(props) => props.padding || theme.spacing[6]};
-  margin: ${(props) => props.margin || "0"};
-  box-shadow: ${(props) => theme.shadows[props.shadow || "base"]};
-  transition: box-shadow ${theme.transitions.duration.normal}
-    ${theme.transitions.easing.ease};
-
-  &:hover {
-    box-shadow: ${(props) =>
-      props.shadow ? theme.shadows.lg : theme.shadows.base};
-  }
-
-  @media (max-width: ${theme.breakpoints.md}) {
-    padding: ${(props) => props.padding || theme.spacing[4]};
-  }
-`;
-
-export const Divider = styled.hr<{
-  color?: string;
-  thickness?: string;
-  margin?: string;
-}>`
-  border: none;
-  height: ${(props) => props.thickness || "1px"};
-  background: ${(props) => props.color || theme.colors.border.light};
-  margin: ${(props) => props.margin || `${theme.spacing[4]} 0`};
-`;
-
-// ===== COMPONENTES DE FEEDBACK =====
-
-export const Badge = styled.span<{
-  variant?: "primary" | "secondary" | "success" | "error" | "warning" | "info";
+export const Button = styled.button<{
+  variant?: "primary" | "secondary" | "danger" | "ghost";
   size?: "sm" | "md" | "lg";
 }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: ${theme.borderRadius.full};
-  font-weight: ${theme.typography.fontWeight.medium};
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
+  border: none;
+  border-radius: ${borderRadius.md};
+  font-family: ${typography.fontFamily.sans};
+  font-weight: ${typography.fontWeight.medium};
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  gap: ${spacing[2]};
 
   ${(props) => {
-    const variant = props.variant || "primary";
-    const size = props.size || "md";
+    switch (props.size) {
+      case "sm":
+        return `
+          padding: ${spacing[2]} ${spacing[3]};
+          font-size: ${typography.fontSize.sm};
+        `;
+      case "lg":
+        return `
+          padding: ${spacing[4]} ${spacing[6]};
+          font-size: ${typography.fontSize.lg};
+        `;
+      default:
+        return `
+          padding: ${spacing[3]} ${spacing[4]};
+          font-size: ${typography.fontSize.base};
+        `;
+    }
+  }}
 
-    const variants = {
-      primary: {
-        background: theme.colors.primary[500],
-        color: theme.colors.text.inverse,
-      },
-      secondary: {
-        background: theme.colors.secondary[500],
-        color: theme.colors.text.inverse,
-      },
-      success: {
-        background: theme.colors.success[500],
-        color: theme.colors.text.inverse,
-      },
-      error: {
-        background: theme.colors.error[500],
-        color: theme.colors.text.inverse,
-      },
-      warning: {
-        background: theme.colors.warning[500],
-        color: theme.colors.text.primary,
-      },
-      info: {
-        background: theme.colors.info[500],
-        color: theme.colors.text.inverse,
-      },
-    };
+  ${(props) => {
+    switch (props.variant) {
+      case "secondary":
+        return `
+          background: ${colors.secondary[100]};
+          color: ${colors.secondary[700]};
+          &:hover {
+            background: ${colors.secondary[200]};
+          }
+        `;
+      case "danger":
+        return `
+          background: ${colors.error[500]};
+          color: ${colors.text.inverse};
+          &:hover {
+            background: ${colors.error[600]};
+          }
+        `;
+      case "ghost":
+        return `
+          background: transparent;
+          color: ${colors.text.secondary};
+          &:hover {
+            background: ${colors.neutral[100]};
+          }
+        `;
+      default:
+        return `
+          background: ${colors.primary[500]};
+          color: ${colors.text.inverse};
+          &:hover {
+            background: ${colors.primary[600]};
+          }
+        `;
+    }
+  }}
 
-    const sizes = {
-      sm: {
-        padding: `${theme.spacing[1]} ${theme.spacing[2]}`,
-        fontSize: theme.typography.fontSize.xs,
-      },
-      md: {
-        padding: `${theme.spacing[2]} ${theme.spacing[3]}`,
-        fontSize: theme.typography.fontSize.sm,
-      },
-      lg: {
-        padding: `${theme.spacing[3]} ${theme.spacing[4]}`,
-        fontSize: theme.typography.fontSize.base,
-      },
-    };
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
 
-    return `
-      background: ${variants[variant].background};
-      color: ${variants[variant].color};
-      padding: ${sizes[size].padding};
-      font-size: ${sizes[size].fontSize};
-    `;
+export const Input = styled.input`
+  width: 100%;
+  padding: ${spacing[3]} ${spacing[4]};
+  border: 1px solid ${colors.border.medium};
+  border-radius: ${borderRadius.md};
+  font-family: ${typography.fontFamily.sans};
+  font-size: ${typography.fontSize.base};
+  background: ${colors.background.primary};
+  color: ${colors.text.primary};
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: ${colors.primary[500]};
+    box-shadow: 0 0 0 3px ${colors.primary[100]}40;
+  }
+
+  &::placeholder {
+    color: ${colors.text.tertiary};
+  }
+
+  &:disabled {
+    background: ${colors.neutral[100]};
+    cursor: not-allowed;
+  }
+`;
+
+export const Text = styled.span<{
+  variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "body" | "caption";
+  color?: keyof typeof colors.text;
+  weight?: keyof typeof typography.fontWeight;
+}>`
+  font-family: ${typography.fontFamily.sans};
+  color: ${(props) => colors.text[props.color || "primary"]};
+  font-weight: ${(props) => typography.fontWeight[props.weight || "normal"]};
+
+  ${(props) => {
+    switch (props.variant) {
+      case "h1":
+        return `font-size: ${typography.fontSize["4xl"]}; line-height: ${typography.lineHeight.tight};`;
+      case "h2":
+        return `font-size: ${typography.fontSize["3xl"]}; line-height: ${typography.lineHeight.tight};`;
+      case "h3":
+        return `font-size: ${typography.fontSize["2xl"]}; line-height: ${typography.lineHeight.snug};`;
+      case "h4":
+        return `font-size: ${typography.fontSize.xl}; line-height: ${typography.lineHeight.snug};`;
+      case "h5":
+        return `font-size: ${typography.fontSize.lg}; line-height: ${typography.lineHeight.normal};`;
+      case "h6":
+        return `font-size: ${typography.fontSize.base}; line-height: ${typography.lineHeight.normal};`;
+      case "caption":
+        return `font-size: ${typography.fontSize.sm}; line-height: ${typography.lineHeight.normal};`;
+      default:
+        return `font-size: ${typography.fontSize.base}; line-height: ${typography.lineHeight.normal};`;
+    }
   }}
 `;
 
-// ===== UTILITÁRIOS =====
+export const Heading = styled(Text).attrs({ as: "h1" })``;
+export const Subheading = styled(Text).attrs({ as: "h2" })``;
+export const Title = styled(Text).attrs({ as: "h3" })``;
+export const Subtitle = styled(Text).attrs({ as: "h4" })``;
+export const Body = styled(Text).attrs({ as: "p" })``;
+export const Caption = styled(Text).attrs({ as: "span" })``;
+
+export const Divider = styled.hr`
+  border: none;
+  height: 1px;
+  background: ${colors.border.light};
+  margin: ${spacing[4]} 0;
+`;
+
+export const Spacer = styled.div<{
+  size?: keyof typeof spacing;
+  axis?: "horizontal" | "vertical";
+}>`
+  ${(props) => {
+    if (props.axis === "horizontal") {
+      return `width: ${spacing[props.size || 4]};`;
+    }
+    return `height: ${spacing[props.size || 4]};`;
+  }}
+`;
+
+export const Badge = styled.span<{
+  variant?: "primary" | "secondary" | "success" | "warning" | "error";
+}>`
+  display: inline-flex;
+  align-items: center;
+  padding: ${spacing[1]} ${spacing[2]};
+  border-radius: ${borderRadius.full};
+  font-size: ${typography.fontSize.sm};
+  font-weight: ${typography.fontWeight.medium};
+  line-height: 1;
+
+  ${(props) => {
+    switch (props.variant) {
+      case "secondary":
+        return `
+          background: ${colors.secondary[100]};
+          color: ${colors.secondary[700]};
+        `;
+      case "success":
+        return `
+          background: ${colors.success[100]};
+          color: ${colors.success[700]};
+        `;
+      case "warning":
+        return `
+          background: ${colors.warning[100]};
+          color: ${colors.warning[700]};
+        `;
+      case "error":
+        return `
+          background: ${colors.error[100]};
+          color: ${colors.error[700]};
+        `;
+      default:
+        return `
+          background: ${colors.primary[100]};
+          color: ${colors.primary[700]};
+        `;
+    }
+  }}
+`;
+
+export const Alert = styled.div<{
+  variant?: "info" | "success" | "warning" | "error";
+}>`
+  padding: ${spacing[4]};
+  border-radius: ${borderRadius.md};
+  border-left: 4px solid;
+
+  ${(props) => {
+    switch (props.variant) {
+      case "success":
+        return `
+          background: ${colors.success[50]};
+          border-left-color: ${colors.success[500]};
+          color: ${colors.success[700]};
+        `;
+      case "warning":
+        return `
+          background: ${colors.warning[50]};
+          border-left-color: ${colors.warning[500]};
+          color: ${colors.warning[700]};
+        `;
+      case "error":
+        return `
+          background: ${colors.error[50]};
+          border-left-color: ${colors.error[500]};
+          color: ${colors.error[700]};
+        `;
+      default:
+        return `
+          background: ${colors.info[50]};
+          border-left-color: ${colors.info[500]};
+          color: ${colors.info[700]};
+        `;
+    }
+  }}
+`;
+
+export const Skeleton = styled.div<{
+  width?: string;
+  height?: string;
+}>`
+  background: ${colors.neutral[200]};
+  border-radius: ${borderRadius.md};
+  width: ${(props) => props.width || "100%"};
+  height: ${(props) => props.height || "1rem"};
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+`;
 
 export const VisuallyHidden = styled.span`
   position: absolute;
@@ -254,21 +319,9 @@ export const VisuallyHidden = styled.span`
   border: 0;
 `;
 
-export const focusVisible = `
+export const FocusVisible = styled.div`
   &:focus-visible {
-    outline: 2px solid ${theme.colors.primary[500]};
+    outline: 2px solid ${colors.primary[500]};
     outline-offset: 2px;
   }
-`;
-
-export const srOnly = `
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 `;

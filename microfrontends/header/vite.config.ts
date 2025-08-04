@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [
     react(),
     federation({
-      name: "brain-agriculture-container",
-      remotes: {
-        header: "http://localhost:3001/assets/remoteEntry.js",
-        dashboard: "http://localhost:3002/assets/remoteEntry.js",
+      name: "header",
+      filename: "remoteEntry.js",
+      exposes: {
+        "./Header": "./src/Header.tsx",
       },
       shared: [
         "react",
@@ -21,17 +21,17 @@ export default defineConfig({
     }),
   ],
   server: {
-    port: 5173,
+    port: 3001,
     cors: true,
     headers: {
       "Access-Control-Allow-Origin": "*",
     },
   },
   build: {
-    target: "esnext",
     modulePreload: false,
+    target: "esnext",
     minify: false,
-    cssCodeSplit: false,
+    ssr: false,
   },
   optimizeDeps: {
     include: [

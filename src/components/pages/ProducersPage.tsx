@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../hooks/redux";
 import { ProducersList } from "../organisms/ProducersList";
-import { DataManager } from "../molecules/DataManager";
 import { deleteProducer } from "../../store/producersSlice";
 import type { Producer } from "../../types";
 
@@ -23,7 +22,6 @@ export const ProducersPage: React.FC = () => {
 
   return (
     <div>
-      <DataManager />
       <ProducersList
         producers={producers}
         onEdit={handleEdit}
